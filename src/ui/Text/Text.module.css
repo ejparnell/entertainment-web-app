@@ -1,0 +1,55 @@
+.text {
+    line-height: var(--line-height);
+}
+
+.preset1 {
+    font-size: var(--font-size-1);
+    letter-spacing: var(--letter-spacing-1);
+}
+
+.preset2Medium {
+    font-size: var(--font-size-2);
+    font-weight: 600;
+}
+
+.preset2Light {
+    font-size: var(--font-size-2);
+    font-weight: 300;
+}
+
+.preset3 {
+    font-size: var(--font-size-3);
+}
+
+.preset4 {
+    font-size: var(--font-size-4);
+}
+
+.preset5 {
+    font-size: var(--font-size-5);
+}
+
+.mobilePreset1 {
+    font-size: var(--font-size-mobile-1);
+    letter-spacing: var(--letter-spacing-2);
+}
+
+.mobilePreset2 {
+    font-size: var(--font-size-mobile-2);
+}
+
+.mobilePreset3 {
+    font-size: var(--font-size-mobile-3);
+}
+
+.mobilePreset4 {
+    font-size: var(--font-size-mobile-4);
+}
+
+.mobilePreset5 {
+    font-size: var(--font-size-mobile-5);
+}
+
+.mobilePreset6 {
+    font-size: var(--font-size-mobile-6);
+}

@@ -1,0 +1,58 @@
+:root {
+    /* Colors */
+    --black: #000000;
+    --white: #FFFFFF;
+    --blue-950: #10141E;
+    --blue-900: #161D2F;
+    --blue-500: #5A698F;
+    --red: #FC4747;
+
+    /* Gradients */
+    --gradient: linear-gradient(90deg, var(--black) 0%, var(--white) 100%);
+
+    /* Font */
+    --font-family-outfit: 'Outfit', sans-serif;
+
+    --font-size-1: 32px;
+    --font-size-2: 24px;
+    --font-size-3: 18px;
+    --font-size-4: 15px;
+    --font-size-5: 13px;
+    --font-size-mobile-1: 20px;
+    --font-size-mobile-2: 16px;
+    --font-size-mobile-3: 15px;
+    --font-size-mobile-4: 14px;
+    --font-size-mobile-5: 12px;
+    --font-size-mobile-6: 11px;
+
+    --line-height: 125%;
+    --letter-spacing-1: -0.5px;
+    --letter-spacing-2: -0.3px;
+
+    /* Spacing */
+    --spacing-0: 0px;
+    --spacing-1: 8px;
+    --spacing-2: 16px;
+    --spacing-3: 24px;
+    --spacing-4: 32px;
+    --spacing-5: 40px;
+    --spacing-6: 56px;
+    --spacing-7: 72px;
+    --spacing-8: 80px;
+}
+
+*,
+*::before,
+*::after,
+html,
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family-outfit);
+    background-color: var(--blue-950);
+    color: var(--white);
+}

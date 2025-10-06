@@ -1,0 +1,27 @@
+.button {
+    width: 336px;
+    height: 48px;
+    border-radius: 6px;
+    border: none;
+    font-family: var(--font-family-outfit);
+    font-size: var(--font-size-3);
+    font-weight: 300;
+    line-height: var(--line-height);
+    text-align: center;
+    cursor: pointer;
+}
+
+.primary {
+    background: var(--red);
+    color: var(--white);
+}
+
+.secondary {
+    background: var(--white);
+    color: var(--black);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -1,0 +1,59 @@
+.inputContainer {
+    height: 48px;
+    padding: 0 var(--spacing-1);
+    background: transparent;
+    position: relative;
+    width: 100%;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.textInput {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-family-outfit);
+    font-size: var(--font-size-3);
+    color: var(--white);
+    border-bottom: 1px solid var(--blue-500);
+    caret-color: var(--red);
+    text-indent: var(--spacing-1);
+    padding: 0 0 21px 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.textInput:focus {
+    border-bottom: 1px solid var(--white);
+}
+
+.error {
+    border-bottom: 1px solid var(--red);
+}
+
+.errorMessage {
+    position: absolute;
+    right: var(--spacing-1);
+    bottom: 21px;
+    color: var(--red);
+    font-family: var(--font-family-outfit);
+    font-size: var(--font-size-4);
+    font-weight: 300;
+    pointer-events: none;
+    padding-right: var(--spacing-1);
+    line-height: var(--line-height);
+}
