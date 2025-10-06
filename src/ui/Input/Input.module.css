@@ -1,6 +1,5 @@
 .inputContainer {
     height: 48px;
-    padding: 0 var(--spacing-1);
     background: transparent;
     position: relative;
     width: 100%;
@@ -25,11 +24,12 @@
     border: none;
     outline: none;
     font-family: var(--font-family-outfit);
-    font-size: var(--font-size-3);
+    font-size: var(--font-size-mobile-3);
+    font-weight: 200;
     color: var(--white);
     border-bottom: 1px solid var(--blue-500);
     caret-color: var(--red);
-    text-indent: var(--spacing-1);
+    text-indent: var(--spacing-2);
     padding: 0 0 21px 0;
     height: 100%;
     display: flex;

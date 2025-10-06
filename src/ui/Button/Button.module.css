@@ -1,11 +1,11 @@
 .button {
-    width: 336px;
+    width: 100%;
     height: 48px;
     border-radius: 6px;
     border: none;
     font-family: var(--font-family-outfit);
     font-size: var(--font-size-3);
-    font-weight: 300;
+    font-weight: 100;
     line-height: var(--line-height);
     text-align: center;
     cursor: pointer;

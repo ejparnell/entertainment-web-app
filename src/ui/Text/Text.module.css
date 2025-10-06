@@ -3,8 +3,9 @@
 }
 
 .preset1 {
-    font-size: var(--font-size-1);
-    letter-spacing: var(--letter-spacing-1);
+    font-size: var(--font-size-mobile-1);
+    letter-spacing: var(--letter-spacing-2);
+    font-weight: 200;
 }
 
 .preset2Medium {

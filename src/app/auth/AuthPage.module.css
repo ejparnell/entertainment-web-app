@@ -1,0 +1,82 @@
+.loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+/* Styles for the Login and Register forms */
+.formContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3);
+}
+
+.authForm {
+    background: var(--blue-900);
+    padding: var(--spacing-4);
+    border-radius: 10px;
+    width: 100%;
+    min-width: 327px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.authTitle {
+    font-size: var(--font-size-1);
+    font-weight: 200;
+    letter-spacing: var(--letter-spacing-1);
+    color: var(--white);
+}
+
+.authFormFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-3);
+}
+
+.authError {
+    color: var(--red);
+    font-size: var(--font-size-mobile-4);
+    font-weight: 300;
+}
+
+.authToggle {
+    text-align: center;
+    margin-top: var(--spacing-3);
+}
+
+.authToggleText {
+    font-size: var(--font-size-mobile-4);
+    font-weight: 300;
+    color: var(--white);
+}
+
+.authLink {
+    background: none;
+    border: none;
+    color: var(--red);
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin-left: 4px;
+}
+
+.authLink:hover {
+    opacity: 0.8;
+}
