@@ -1,0 +1,10 @@
+@media screen and (min-width: 768px) {
+    .layout {
+        padding: var(--spacing-2);
+    }
+
+    .content {
+        padding: var(--spacing-4);
+        padding-left: calc(96px + var(--spacing-5));
+    }
+}

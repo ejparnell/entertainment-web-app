@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
@@ -18,6 +18,12 @@ export default function AuthPage() {
         setIsLoginMode(!isLoginMode);
     };
 
+    useEffect(() => {
+        if (!loading && user) {
+            router.push('/');
+        }
+    }, [user, loading, router]);
+
     if (loading) {
         return (
             <div className={styles.loading}>
@@ -27,8 +33,11 @@ export default function AuthPage() {
     }
 
     if (user) {
-        router.push('/');
-        return null;
+        return (
+            <div className={styles.loading}>
+                <Spinner size='large' />
+            </div>
+        );
     }
 
     return (
@@ -38,7 +47,6 @@ export default function AuthPage() {
                 alt="App Logo"
                 width={32}
                 height={32}
-                className={styles.logo}
                 priority
             />
             {isLoginMode ? (
