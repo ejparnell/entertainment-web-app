@@ -19,6 +19,7 @@
     font-weight: 300;
     caret-color: var(--red);
     height: 47px;
+    text-indent: var(--spacing-1);
 }
 
 .visuallyHidden {

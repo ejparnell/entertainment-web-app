@@ -29,6 +29,8 @@
     --letter-spacing-1: -0.5px;
     --letter-spacing-2: -0.3px;
 
+    --font-weight-light: 100;
+
     /* Spacing */
     --spacing-0: 0px;
     --spacing-1: 8px;
@@ -55,63 +57,4 @@ body {
     font-family: var(--font-family-outfit);
     background-color: var(--blue-950);
     color: var(--white);
-}
-
-/* Authentication Styles */
-/* Loading States */
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-/* Error Styles */
-.error-text {
-    color: var(--red);
-    text-align: center;
-}
-
-/* Dashboard Styles */
-.dashboard {
-    padding: var(--spacing-3);
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-4);
-    padding-bottom: var(--spacing-3);
-    border-bottom: 1px solid var(--blue-500);
-}
-
-.logout-button {
-    background: var(--red);
-    color: var(--white);
-    border: none;
-    padding: var(--spacing-1) var(--spacing-2);
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: var(--font-size-5);
-    transition: opacity 0.2s ease;
-}
-
-.logout-button:hover {
-    opacity: 0.8;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .auth-form {
-        padding: var(--spacing-3);
-        margin: var(--spacing-2);
-    }
-    
-    .dashboard-header {
-        flex-direction: column;
-        gap: var(--spacing-2);
-        text-align: center;
-    }
 }
