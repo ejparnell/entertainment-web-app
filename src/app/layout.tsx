@@ -13,6 +13,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
     title: 'Entertainment Web App',
     description: 'Your personal entertainment hub for movies and TV shows',
+    icons: {
+        icon: '/assets/favicon-32x32.png',
+    },
 };
 
 export default function RootLayout({
