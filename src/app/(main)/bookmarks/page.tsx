@@ -6,7 +6,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { fetchOMDBDataBatch, fetchOMDBData, OMDBMovie } from '@/services/omdbService';
 
 import Spinner from '@/ui/Spinner';
-import Card from '@/ui/Card';
+import PageLayout from '@/components/PageLayout';
+import { renderCards } from '@/utils/cardRenderer';
 import styles from './Bookmarks.module.css';
 
 interface EnrichedBookmark {
@@ -21,6 +22,7 @@ export default function BookmarksPage() {
     const [omdbError, setOmdbError] = useState<string | null>(null);
     const [bookmarkError, setBookmarkError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [searchResult, setSearchResult] = useState<EnrichedBookmark | null>(null);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -73,14 +75,6 @@ export default function BookmarksPage() {
         }
     }, [user?.bookmarkedMovies]);
 
-    if (loading) {
-        return <Spinner fullscreen />;
-    }
-
-    if (!user) {
-        return <Spinner fullscreen />;
-    }
-
     async function handleBookmarkToggle(identifier: string) {
         try {
             await authToggleBookmark(identifier);
@@ -91,60 +85,83 @@ export default function BookmarksPage() {
         }
     }
 
-    function renderBookmarkCards() {
-        if (enrichedBookmarks.length === 0) {
-            return (
-                <div className={styles.emptyState}>
-                    <p>No bookmarks yet. Start bookmarking your favorite movies and TV shows!</p>
-                </div>
-            );
+    function handleSearchResult(result: OMDBMovie | null, query: string) {
+        if (result) {
+            setSearchResult({
+                identifier: result.imdbID || query,
+                omdbData: result
+            });
         }
-
-        return enrichedBookmarks.map((item, index) => {
-            const { identifier, omdbData } = item;
-            
-            const title = omdbData?.Title || identifier;
-            const year = omdbData?.Year || 'Unknown';
-            const rating = omdbData?.Rated || 'Not Rated';
-            const category = omdbData?.Type === 'movie' ? 'Movie' : 'TV Series';
-            const imageSrc = omdbData?.Poster && omdbData.Poster !== 'N/A' 
-                ? omdbData.Poster 
-                : '';
-            
-            return (
-                <Card
-                    key={`bookmark-${identifier}-${index}`}
-                    imageSrc={imageSrc}
-                    title={title}
-                    year={year}
-                    category={category as 'Movie' | 'TV Series'}
-                    rating={rating}
-                    isBookmarked={isBookmarked(identifier)}
-                    onToggleBookmark={() => handleBookmarkToggle(identifier)}
-                />
-            );
-        });
     }
 
-    return (
-        <div className={styles.bookmarksContainer}>
-            <h1 className={styles.pageTitle}>Bookmarked Movies & TV Series</h1>
+    function handleSearchClear() {
+        setSearchResult(null);
+    }
 
+    if (loading) {
+        return <Spinner fullscreen />;
+    }
+
+    if (!user) {
+        return <Spinner fullscreen />;
+    }
+
+    const bookmarkItems = enrichedBookmarks.map(bookmark => ({
+        mlData: {
+            title: bookmark.omdbData?.Title || bookmark.identifier,
+            platform: '',
+            type: bookmark.omdbData?.Type === 'movie' ? 'Movie' : 'TV Series',
+            similarity_score: 0,
+            genres: '',
+            release_year: bookmark.omdbData?.Year ? parseInt(bookmark.omdbData.Year) : undefined,
+            rating: bookmark.omdbData?.Rated
+        },
+        omdbData: bookmark.omdbData
+    }));
+
+    const displayItems = searchResult ? [{
+        mlData: {
+            title: searchResult.omdbData?.Title || searchResult.identifier,
+            platform: '',
+            type: searchResult.omdbData?.Type === 'movie' ? 'Movie' : 'TV Series',
+            similarity_score: 0,
+            genres: '',
+            release_year: searchResult.omdbData?.Year ? parseInt(searchResult.omdbData.Year) : undefined,
+            rating: searchResult.omdbData?.Rated
+        },
+        omdbData: searchResult.omdbData
+    }] : bookmarkItems;
+
+    return (
+        <PageLayout
+            pageTitle="Bookmarked Movies & TV Series"
+            onSearchResult={handleSearchResult}
+            onSearchClear={handleSearchClear}
+        >
             <div className={styles.showsSection}>
                 <h2 className={styles.sectionTitle}>
-                    Your Bookmarks ({user?.bookmarkedMovies?.length || 0})
+                    {searchResult ? 'Search Result' : `Your Bookmarks (${user?.bookmarkedMovies?.length || 0})`}
                 </h2>
 
                 {isLoading ? (
                     <div className={styles.loadingContainer}>
                         <Spinner size="medium" />
                     </div>
+                ) : displayItems.length === 0 ? (
+                    <div className={styles.emptyState}>
+                        <p>No bookmarks yet. Start bookmarking your favorite movies and TV shows!</p>
+                    </div>
                 ) : (
                     <div className={styles.cardsScrollY}>
-                        {renderBookmarkCards()}
+                        {renderCards({
+                            items: displayItems,
+                            keyPrefix: 'bookmark',
+                            isBookmarked,
+                            onToggleBookmark: handleBookmarkToggle
+                        })}
                     </div>
                 )}
             </div>
-        </div>
+        </PageLayout>
     );
 }

@@ -3,8 +3,8 @@
         padding: var(--spacing-2);
     }
 
-    .content {
+    /* .content {
         padding: var(--spacing-4);
         padding-left: calc(96px + var(--spacing-5));
-    }
+    } */
 }

@@ -3,9 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { fetchOMDBData, OMDBMovie } from '@/services/omdbService';
 import Input from '@/ui/Input';
 import Button from '@/ui/Button';
 import Spinner from '@/ui/Spinner';
+import PageLayout from '@/components/PageLayout';
+import { renderCards } from '@/utils/cardRenderer';
 import styles from './ProfilePage.module.css';
 
 interface PasswordChangeData {
@@ -16,7 +19,7 @@ interface PasswordChangeData {
 
 export default function ProfilePage() {
     const router = useRouter();
-    const { user, logout, loading, tokens } = useAuth();
+    const { user, logout, loading, tokens, isBookmarked, toggleBookmark } = useAuth();
     const [passwordData, setPasswordData] = useState<PasswordChangeData>({
         currentPassword: '',
         newPassword: '',
@@ -26,6 +29,7 @@ export default function ProfilePage() {
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
     const [showErrors, setShowErrors] = useState(false);
+    const [searchResult, setSearchResult] = useState<OMDBMovie | null>(null);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -133,6 +137,22 @@ export default function ProfilePage() {
         }
     }
 
+    function handleSearchResult(result: OMDBMovie | null, query: string) {
+        setSearchResult(result);
+    }
+
+    function handleSearchClear() {
+        setSearchResult(null);
+    }
+
+    async function handleBookmarkToggle(identifier: string) {
+        try {
+            await toggleBookmark(identifier);
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
+        }
+    }
+
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -141,9 +161,39 @@ export default function ProfilePage() {
         });
     };
 
+    const searchResultItem = searchResult ? [{
+        mlData: {
+            title: searchResult.Title,
+            platform: '',
+            type: searchResult.Type === 'movie' ? 'Movie' : 'TV Series',
+            similarity_score: 0,
+            genres: '',
+            release_year: searchResult.Year ? parseInt(searchResult.Year) : undefined,
+            rating: searchResult.Rated
+        },
+        omdbData: searchResult
+    }] : [];
+
     return (
-        <div className={styles.profileContainer}>
-            <h1 className={styles.pageTitle}>Profile Settings</h1>
+        <PageLayout
+            pageTitle="Profile Settings"
+            onSearchResult={handleSearchResult}
+            onSearchClear={handleSearchClear}
+        >
+            {/* Show search result if available */}
+            {searchResult && (
+                <div className={styles.profileSection}>
+                    <h2 className={styles.sectionTitle}>Search Result</h2>
+                    <div className={styles.cardsScrollY}>
+                        {renderCards({
+                            items: searchResultItem,
+                            keyPrefix: 'search',
+                            isBookmarked,
+                            onToggleBookmark: handleBookmarkToggle
+                        })}
+                    </div>
+                </div>
+            )}
 
             <div className={styles.profileSection}>
                 <h2 className={styles.sectionTitle}>Account Information</h2>
@@ -257,6 +307,6 @@ export default function ProfilePage() {
                     </Button>
                 </div>
             </div>
-        </div>
+        </PageLayout>
     );
 }

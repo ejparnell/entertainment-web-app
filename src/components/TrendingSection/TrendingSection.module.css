@@ -1,0 +1,47 @@
+.sectionHeader {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.sectionTitle {
+    line-height: var(--line-height);
+    font-size: var(--font-size-mobile-1);
+    font-weight: var(--font-weight-light);
+    letter-spacing: var(--letter-spacing-2);
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.platformSelector {
+    width: 200px;
+    min-width: 180px;
+}
+
+.cardsScrollX {
+    display: flex;
+    gap: var(--spacing-2);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue-700) transparent;
+    height: 340px;
+    margin-top: var(--spacing-2);
+}
+
+.cardsScrollX > * {
+    flex-shrink: 0;
+}
+
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.showsSection {
+    min-height: 320px;
+}
