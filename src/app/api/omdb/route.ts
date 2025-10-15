@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        // Build query parameter based on what's provided
         const queryParam = imdbId ? `i=${encodeURIComponent(imdbId)}` : `t=${encodeURIComponent(title!)}`;
         const omdbUrl = `${OMDB_BASE_URL}?apikey=${OMDB_API_KEY}&${queryParam}`;
         

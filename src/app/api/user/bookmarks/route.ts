@@ -37,8 +37,6 @@ async function updateBookmarksHandler(request: AuthenticatedRequest) {
         await dbConnect();
 
         const body = await request.json();
-
-        // Validate input
         const validatedData = bookmarkSchema.parse(body);
 
         const user = await User.findById(request.user?.userId);
@@ -50,12 +48,10 @@ async function updateBookmarksHandler(request: AuthenticatedRequest) {
         }
 
         if (validatedData.action === 'add') {
-            // Add bookmark if not already exists
             if (!user.bookmarkedMovies.includes(validatedData.movieId)) {
                 user.bookmarkedMovies.push(validatedData.movieId);
             }
         } else if (validatedData.action === 'remove') {
-            // Remove bookmark
             user.bookmarkedMovies = user.bookmarkedMovies.filter(
                 (id: string) => id !== validatedData.movieId
             );

@@ -8,7 +8,6 @@ import { authRateLimit } from '@/lib/rate-limit';
 
 export async function POST(request: NextRequest) {
     try {
-        // Apply rate limiting
         const rateLimitResult = authRateLimit(request);
         if (!rateLimitResult.success) {
             return NextResponse.json(
@@ -23,11 +22,8 @@ export async function POST(request: NextRequest) {
         await dbConnect();
 
         const body = await request.json();
-
-        // Validate input
         const validatedData = loginSchema.parse(body);
 
-        // Find user by email
         const user = await User.findOne({ email: validatedData.email }).select(
             '+password'
         );
@@ -38,7 +34,6 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check password
         const isPasswordValid = await user.comparePassword(
             validatedData.password
         );
@@ -49,10 +44,8 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Generate tokens
         const tokens = generateTokens(user);
 
-        // Save refresh token to user
         user.refreshTokens.push(tokens.refreshToken);
         await user.save();
 
@@ -65,7 +58,6 @@ export async function POST(request: NextRequest) {
             { status: 200 }
         );
 
-        // Add rate limit headers
         response.headers.set(
             'X-RateLimit-Remaining',
             rateLimitResult.remaining?.toString() || '0'

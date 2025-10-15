@@ -1,0 +1,78 @@
+.bookmarksContainer {
+    padding: var(--spacing-3) var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.pageTitle {
+    font-size: var(--font-size-mobile-2);
+    font-weight: var(--font-weight-light);
+    letter-spacing: var(--letter-spacing-2);
+    color: var(--white);
+    margin: 0 0 var(--spacing-3) 0;
+    line-height: var(--line-height);
+}
+
+.sectionTitle {
+    line-height: var(--line-height);
+    font-size: var(--font-size-mobile-1);
+    font-weight: var(--font-weight-light);
+    letter-spacing: var(--letter-spacing-2);
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.cardsScrollY {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    justify-content: space-between;
+    margin-top: var(--spacing-2);
+}
+
+.cardsScrollY > * {
+    flex-shrink: 0;
+}
+
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.showsSection {
+    min-height: 320px;
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--blue-500);
+    font-size: var(--font-size-4);
+    text-align: center;
+}
+
+.error {
+    background-color: var(--red);
+    color: var(--white);
+    padding: var(--spacing-2);
+    border-radius: 8px;
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-5);
+}
+
+.errorWarning {
+    background-color: #ff8c00;
+    color: var(--white);
+    padding: var(--spacing-2);
+    border-radius: 8px;
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-5);
+}

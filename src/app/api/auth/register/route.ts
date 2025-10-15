@@ -10,11 +10,8 @@ export async function POST(request: NextRequest) {
         await dbConnect();
 
         const body = await request.json();
-
-        // Validate input
         const validatedData = registerSchema.parse(body);
 
-        // Check if user already exists
         const existingUser = await User.findOne({ email: validatedData.email });
         if (existingUser) {
             return NextResponse.json(
@@ -23,13 +20,9 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Create new user
         const user = await User.create(validatedData);
-
-        // Generate tokens
         const tokens = generateTokens(user);
 
-        // Save refresh token to user
         user.refreshTokens.push(tokens.refreshToken);
         await user.save();
 

@@ -28,16 +28,16 @@ export const generateTokens = (user: IUser) => {
     };
 
     const accessToken = jwt.sign(payload, JWT_SECRET!, {
-        expiresIn: '15m', // Short-lived access token
+        expiresIn: '15m',
     });
 
     const refreshPayload: RefreshTokenPayload = {
         userId: user._id,
-        tokenVersion: Date.now(), // Simple versioning
+        tokenVersion: Date.now(),
     };
 
     const refreshToken = jwt.sign(refreshPayload, JWT_REFRESH_SECRET!, {
-        expiresIn: '7d', // Long-lived refresh token
+        expiresIn: '7d',
     });
 
     return {

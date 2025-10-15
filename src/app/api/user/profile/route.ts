@@ -37,11 +37,8 @@ async function updateProfileHandler(request: AuthenticatedRequest) {
         await dbConnect();
 
         const body = await request.json();
-
-        // Validate input
         const validatedData = updateProfileSchema.parse(body);
 
-        // Check if email is being changed and if it already exists
         if (validatedData.email) {
             const existingUser = await User.findOne({
                 email: validatedData.email,
@@ -56,7 +53,6 @@ async function updateProfileHandler(request: AuthenticatedRequest) {
             }
         }
 
-        // Update user
         const user = await User.findByIdAndUpdate(
             request.user?.userId,
             validatedData,

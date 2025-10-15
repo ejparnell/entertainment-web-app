@@ -11,7 +11,6 @@ export interface IUser extends Document {
     resetPasswordToken?: string;
     resetPasswordExpires?: Date;
     refreshTokens: string[];
-    // Entertainment app specific fields
     bookmarkedMovies: string[];
     watchHistory: string[];
     preferences: {
@@ -40,7 +39,7 @@ const UserSchema = new Schema<IUser>(
             type: String,
             required: [true, 'Password is required'],
             minlength: [6, 'Password must be at least 6 characters'],
-            select: false, // Don't include password in queries by default
+            select: false,
         },
         name: {
             type: String,
@@ -68,15 +67,14 @@ const UserSchema = new Schema<IUser>(
                 type: String,
             },
         ],
-        // Entertainment app specific fields
         bookmarkedMovies: [
             {
-                type: String, // Movie/TV show IDs
+                type: String,
             },
         ],
         watchHistory: [
             {
-                type: String, // Movie/TV show IDs with timestamps
+                type: String,
             },
         ],
         preferences: {
@@ -93,7 +91,6 @@ const UserSchema = new Schema<IUser>(
     }
 );
 
-// Hash password before saving
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
@@ -106,14 +103,12 @@ UserSchema.pre('save', async function (next) {
     }
 });
 
-// Compare password method
 UserSchema.methods.comparePassword = async function (
     candidatePassword: string
 ): Promise<boolean> {
     return bcrypt.compare(candidatePassword, this.password);
 };
 
-// Remove sensitive data from JSON output
 UserSchema.methods.toJSON = function () {
     const userObject = this.toObject();
     delete userObject.password;

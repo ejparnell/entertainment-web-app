@@ -21,7 +21,6 @@ export function rateLimit(options: RateLimitOptions) {
         const clientId = getClientId(request);
         const now = Date.now();
 
-        // Clean up expired entries
         for (const [key, value] of rateLimitMap.entries()) {
             if (value.resetTime < now) {
                 rateLimitMap.delete(key);
@@ -31,7 +30,6 @@ export function rateLimit(options: RateLimitOptions) {
         const current = rateLimitMap.get(clientId);
 
         if (!current || current.resetTime < now) {
-            // New window or expired window
             rateLimitMap.set(clientId, {
                 count: 1,
                 resetTime: now + windowMs,
@@ -44,7 +42,6 @@ export function rateLimit(options: RateLimitOptions) {
         }
 
         if (current.count >= maxRequests) {
-            // Rate limit exceeded
             return {
                 success: false,
                 remaining: 0,
@@ -52,7 +49,6 @@ export function rateLimit(options: RateLimitOptions) {
             };
         }
 
-        // Increment count
         current.count += 1;
         return {
             success: true,
@@ -63,7 +59,6 @@ export function rateLimit(options: RateLimitOptions) {
 }
 
 function getClientId(request: NextRequest): string {
-    // Get client identifier (IP address)
     const forwardedFor = request.headers.get('x-forwarded-for');
     const realIp = request.headers.get('x-real-ip');
     
@@ -75,17 +70,15 @@ function getClientId(request: NextRequest): string {
         return realIp;
     }
     
-    // Fallback for development
     return 'localhost';
 }
 
-// Predefined rate limiters for common use cases
 export const authRateLimit = rateLimit({
-    maxRequests: 5, // 5 attempts
-    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 5,
+    windowMs: 15 * 60 * 1000,
 });
 
 export const apiRateLimit = rateLimit({
-    maxRequests: 100, // 100 requests
-    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 100,
+    windowMs: 15 * 60 * 1000,
 });

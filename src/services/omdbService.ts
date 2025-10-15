@@ -31,7 +31,6 @@ export interface OMDBMovie {
 
 export async function fetchOMDBData(titleOrId: string): Promise<OMDBMovie | null> {
     try {
-        // Determine if this is an IMDB ID (starts with "tt" followed by digits) or a title
         const isImdbId = titleOrId.match(/^tt\d+$/);
         const queryParam = isImdbId ? `i=${encodeURIComponent(titleOrId)}` : `t=${encodeURIComponent(titleOrId)}`;
         

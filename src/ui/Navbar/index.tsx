@@ -14,7 +14,7 @@ interface NavbarProps {
 const NAV_LINKS = [
     { href: '/', icon: '/assets/icon-nav-home.svg', alt: 'Home' },
     { href: '/movies', icon: '/assets/icon-nav-movies.svg', alt: 'Movies' },
-    { href: '/tv-series', icon: '/assets/icon-nav-tv-series.svg', alt: 'TV Series' },
+    { href: '/shows', icon: '/assets/icon-nav-tv-series.svg', alt: 'TV Series' },
     { href: '/bookmarks', icon: '/assets/icon-nav-bookmark.svg', alt: 'Bookmarks' },
 ];
 

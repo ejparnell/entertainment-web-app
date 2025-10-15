@@ -10,11 +10,8 @@ export async function POST(request: NextRequest) {
         await dbConnect();
 
         const body = await request.json();
-
-        // Validate input
         const validatedData = refreshTokenSchema.parse(body);
 
-        // Verify refresh token
         const payload = verifyRefreshToken(validatedData.refreshToken);
         if (!payload) {
             return NextResponse.json(
@@ -23,7 +20,6 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Find user and check if refresh token exists
         const user = await User.findById(payload.userId);
         if (!user || !user.refreshTokens.includes(validatedData.refreshToken)) {
             return NextResponse.json(
@@ -32,15 +28,11 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Remove the used refresh token
         user.refreshTokens = user.refreshTokens.filter(
             (token: string) => token !== validatedData.refreshToken
         );
 
-        // Generate new tokens
         const tokens = generateTokens(user);
-
-        // Save new refresh token
         user.refreshTokens.push(tokens.refreshToken);
         await user.save();
 

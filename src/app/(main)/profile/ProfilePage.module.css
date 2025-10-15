@@ -1,0 +1,93 @@
+.profileContainer {
+    padding: var(--spacing-3) var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.pageTitle {
+    font-size: var(--font-size-mobile-2);
+    font-weight: var(--font-weight-light);
+    letter-spacing: var(--letter-spacing-2);
+    color: var(--white);
+    margin: 0 0 var(--spacing-3) 0;
+    line-height: var(--line-height);
+}
+
+.profileSection {
+    min-height: auto;
+}
+
+.sectionTitle {
+    line-height: var(--line-height);
+    font-size: var(--font-size-mobile-1);
+    font-weight: var(--font-weight-light);
+    letter-spacing: var(--letter-spacing-2);
+    margin: 0 0 var(--spacing-3) 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.infoLabel {
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-light);
+    color: var(--blue-500);
+    letter-spacing: var(--letter-spacing-2);
+    margin: 0;
+}
+
+.infoValue {
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-light);
+    color: var(--white);
+    margin: 0;
+    padding: var(--spacing-1) 0;
+    border-bottom: 1px solid var(--blue-900);
+}
+
+.passwordForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    max-width: 400px;
+    margin-bottom: var(--spacing-2);
+}
+
+.actionsGrid {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.successMessage {
+    background-color: #22c55e;
+    color: var(--white);
+    padding: var(--spacing-2);
+    border-radius: 8px;
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-5);
+}
+
+.errorMessage {
+    background-color: var(--red);
+    color: var(--white);
+    padding: var(--spacing-2);
+    border-radius: 8px;
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-5);
+}

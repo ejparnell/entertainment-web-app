@@ -9,11 +9,8 @@ async function logoutHandler(request: AuthenticatedRequest) {
         await dbConnect();
 
         const body = await request.json().catch(() => ({}));
-
-        // Validate input (refresh token is optional for logout)
         const refreshToken = body.refreshToken;
 
-        // Find user
         const user = await User.findById(request.user?.userId);
         if (!user) {
             return NextResponse.json(
@@ -23,12 +20,10 @@ async function logoutHandler(request: AuthenticatedRequest) {
         }
 
         if (refreshToken) {
-            // Remove specific refresh token
             user.refreshTokens = user.refreshTokens.filter(
                 (token: string) => token !== refreshToken
             );
         } else {
-            // Remove all refresh tokens (logout from all devices)
             user.refreshTokens = [];
         }
 

@@ -36,7 +36,6 @@ export const withAuth = (
                 );
             }
 
-            // Verify user still exists
             const user = await User.findById(payload.userId);
             if (!user) {
                 return NextResponse.json(
@@ -45,7 +44,6 @@ export const withAuth = (
                 );
             }
 
-            // Add user info to request
             req.user = {
                 userId: payload.userId,
                 email: payload.email,
