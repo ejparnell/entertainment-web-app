@@ -5,12 +5,27 @@
     gap: var(--spacing-3);
 }
 
+.sectionHeader {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
 .sectionTitle {
     line-height: var(--line-height);
     font-size: var(--font-size-mobile-1);
     font-weight: var(--font-weight-light);
     letter-spacing: var(--letter-spacing-2);
-    margin-bottom: var(--spacing-2);
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.platformSelector {
+    width: 200px;
+    min-width: 180px;
 }
 
 .cardsScrollX {
@@ -20,6 +35,7 @@
     scrollbar-width: thin;
     scrollbar-color: var(--blue-700) transparent;
     height: 340px;
+    margin-top: var(--spacing-2);
 }
 
 .cardsScrollY {
@@ -27,6 +43,7 @@
     flex-wrap: wrap;
     gap: var(--spacing-2);
     justify-content: space-between;
+    margin-top: var(--spacing-2);
 }
 
 .cardsScrollX > *, .cardsScrollY > * {
@@ -37,5 +54,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px;
+    height: 300px;
+}
+
+.showsSection {
+    min-height: 320px;
 }

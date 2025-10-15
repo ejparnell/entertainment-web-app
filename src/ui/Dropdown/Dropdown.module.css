@@ -1,0 +1,126 @@
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdownButton {
+    width: 100%;
+    height: 48px;
+    padding: 0 var(--spacing-2);
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--white);
+    font-family: var(--font-family-outfit);
+    font-size: var(--font-size-3);
+    font-weight: 100;
+    line-height: var(--line-height);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-mobile-3);
+}
+
+.dropdownButton:hover:not(.disabled) {
+    background: var(--blue-500);
+}
+
+.dropdownButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--red);
+}
+
+.dropdownButton.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--blue-900);
+}
+
+.dropdownText {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownIcon {
+    width: 16px;
+    height: 16px;
+    margin-left: var(--spacing-1);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--blue-900);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.dropdownMenu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdownMenu::-webkit-scrollbar-track {
+    background: var(--blue-950);
+    border-radius: 3px;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb {
+    background: var(--blue-500);
+    border-radius: 3px;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb:hover {
+    background: var(--red);
+}
+
+.dropdownOption {
+    width: 100%;
+    padding: var(--spacing-2);
+    border: none;
+    background: transparent;
+    color: var(--white);
+    font-family: var(--font-family-outfit);
+    font-size: var(--font-size-4);
+    font-weight: 100;
+    line-height: var(--line-height);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: block;
+    font-size: var(--font-size-mobile-4);
+    padding: var(--spacing-1) var(--spacing-2);
+}
+
+.dropdownOption:hover {
+    background: var(--blue-500);
+}
+
+.dropdownOption:focus {
+    outline: none;
+    background: var(--blue-500);
+}
+
+.dropdownOption.selected {
+    background: var(--red);
+    color: var(--white);
+}
+
+.dropdownOption.selected:hover {
+    background: var(--red);
+}

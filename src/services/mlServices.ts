@@ -1,5 +1,16 @@
 const ML_MODEL_ENDPOINT = process.env.ML_MODEL_ENDPOINT || 'http://localhost:8000';
 
+function mapPlatformToAPIValue(platform: string): string {
+    const platformMap: { [key: string]: string } = {
+        'Netflix': 'Netflix',
+        'Hulu': 'Hulu',
+        'Amazon Prime Video': 'Amazon Prime',
+        'Disney+': 'Disney+'
+    };
+    
+    return platformMap[platform] || platform;
+}
+
 export async function fetchMLRecommendations(titles: string[] = ["The Office", "Friends", "Breaking Bad"]) {
     try {
         const response = await fetch(`${ML_MODEL_ENDPOINT}/recommendations`, {
@@ -27,9 +38,12 @@ export async function fetchMLRecommendations(titles: string[] = ["The Office", "
     }
 }
 
-export async function fetchTopShows(platform: "Netflix" | "Hulu" | "Prime Video" | "Disney+" = "Netflix", n: number = 10) {
+export async function fetchTopShows(platform: "Netflix" | "Hulu" | "Amazon Prime Video" | "Disney+" = "Netflix", n: number = 10) {
     try {
-        const response = await fetch(`${ML_MODEL_ENDPOINT}/recommendations?n_shows=${n}&platform_filter=${platform}`, {
+        const apiPlatform = mapPlatformToAPIValue(platform);
+        const url = `${ML_MODEL_ENDPOINT}/recommendations?n_shows=${n}&platform_filter=${encodeURIComponent(apiPlatform)}`;
+        
+        const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +51,9 @@ export async function fetchTopShows(platform: "Netflix" | "Hulu" | "Prime Video"
             });
 
             if (!response.ok) {
-                throw new Error(`ML API Error: ${response.status}`);
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
+                throw new Error(`ML API Error: ${response.status} - ${errorText}`);
             }
 
             return await response.json();

@@ -9,6 +9,7 @@ import { fetchOMDBDataBatch, fetchOMDBData, OMDBMovie } from '@/services/omdbSer
 import Spinner from '@/ui/Spinner';
 import Card from '@/ui/Card';
 import Search from '@/ui/Search';
+import Dropdown from '@/ui/Dropdown';
 import styles from './Home.module.css';
 
 interface MLRecommendation {
@@ -38,6 +39,7 @@ export default function Home() {
     const [omdbError, setOmdbError] = useState<string | null>(null);
     const [searchError, setSearchError] = useState<string | null>(null);
     const [bookmarkError, setBookmarkError] = useState<string | null>(null);
+    const [selectedPlatform, setSelectedPlatform] = useState<string>('Netflix');
 
     useEffect(() => {
         if (!loading && !user) {
@@ -141,17 +143,17 @@ export default function Home() {
     useEffect(() => {
         async function loadTopShows() {
             try {
-                const topShows = await fetchTopShows("Netflix", 10);
+                const topShows = await fetchTopShows(selectedPlatform as "Netflix" | "Hulu" | "Amazon Prime Video" | "Disney+", 10);
                 setTopShows(topShows);
             } catch (error) {
                 setMlError(error instanceof Error ? error.message : 'Error fetching top shows');
             }
         }
 
-        if (user && !topShows) {
+        if (user) {
             loadTopShows();
         }
-    }, [user, topShows]);
+    }, [user, selectedPlatform]);
 
     useEffect(() => {
         async function enrichTopShowsWithOMDB() {
@@ -174,10 +176,10 @@ export default function Home() {
             }
         }
 
-        if (topShows && !topShows.enriched && enrichedTopShows.length === 0) {
+        if (topShows && !topShows.enriched) {
             enrichTopShowsWithOMDB();
         }
-    }, [topShows, enrichedTopShows]);
+    }, [topShows]);
 
     if (loading) {
         return <Spinner fullscreen />;
@@ -195,6 +197,19 @@ export default function Home() {
             setBookmarkError(error instanceof Error ? error.message : 'Error toggling bookmark');
         }
     }
+
+    function handlePlatformChange(platform: string) {
+        setSelectedPlatform(platform);
+        setTopShows(null);
+        setEnrichedTopShows([]);
+    }
+
+    const platformOptions = [
+        { value: 'Netflix', label: 'Netflix' },
+        { value: 'Hulu', label: 'Hulu' },
+        { value: 'Amazon Prime Video', label: 'Amazon Prime Video' },
+        { value: 'Disney+', label: 'Disney+' },
+    ];
 
     function renderRecommendationCards(recommendations: EnrichedRecommendation[], keyPrefix: string) {
         return recommendations.map((item, index) => {
@@ -261,27 +276,41 @@ export default function Home() {
                 onSearchClear={handleSearchClear}
             />
 
-            <div>
-                <h2 className={styles.sectionTitle}>
-                    {searchedShow ? 'Search Results' : 'Trending'}
-                </h2>
+            <div className={styles.showsSection}>
+                <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>
+                        {searchedShow ? 'Search Results' : 'Trending'}
+                    </h2>
+                    
+                    {!searchedShow && (
+                        <div className={styles.platformSelector}>
+                            <Dropdown
+                                options={platformOptions}
+                                value={selectedPlatform}
+                                onChange={handlePlatformChange}
+                                aria-label="Select streaming platform"
+                            />
+                        </div>
+                    )}
+                </div>
 
                 {searchedShow ? (
-                    <div className={styles.cardsScroll}>
+                    <div className={styles.cardsScrollX}>
                         {renderRecommendationCards([searchedShow], 'search')}
                     </div>
-                ) : enrichedRecommendations.length > 0 ? (
+                ) : enrichedTopShows.length > 0 ? (
                     <div className={styles.cardsScrollX}>
-                        {renderRecommendationCards(enrichedRecommendations, 'rec')}
+                        {renderRecommendationCards(enrichedTopShows, 'trending')}
                     </div>
-                ) : mlRecommendations ? (
+                ) : topShows ? (
                     <div className={styles.loadingContainer}>
-                        <Spinner size="medium" inline />
+                        <Spinner size="medium" />
                     </div>
                 ) : null}
+
             </div>
 
-            <div>
+            <div className={styles.showsSection}>
                 <h2 className={styles.sectionTitle}>Recommended for you</h2>
 
                 {enrichedRecommendations.length > 0 ? (
@@ -290,7 +319,7 @@ export default function Home() {
                     </div>
                 ) : mlRecommendations ? (
                     <div className={styles.loadingContainer}>
-                        <Spinner size="medium" inline />
+                        <Spinner size="medium" />
                     </div>
                 ) : null}
             </div>
